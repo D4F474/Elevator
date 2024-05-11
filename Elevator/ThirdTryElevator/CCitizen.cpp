@@ -46,9 +46,9 @@ unsigned short CCitizen::randomNumberForDestination()
 {
 	unsigned short generatedNum = 0;
 	generatedNum = rand() % getLevel() + 1;
-	if (generatedNum == getLevel())
+	while(generatedNum == personLevel || generatedNum == 4)
 	{
-		randomNumberForDestination();
+		generatedNum = rand() % getLevel() + 1;
 	}
 	return generatedNum;
 }
@@ -56,7 +56,9 @@ unsigned short CCitizen::randomNumberForDestination()
 unsigned short CCitizen::randomNumberForCurrentLevel() 
 {
 	unsigned short random = rand() % getLevel() + 1;
-	return random;
+		random = rand() % getLevel() + 1;
+	personLevel = random;
+	return personLevel;
 }
 
 unsigned short CCitizen::randomKillogramsForPerson() 

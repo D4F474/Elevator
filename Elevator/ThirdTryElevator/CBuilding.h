@@ -3,7 +3,6 @@
 #include <iostream>
 #include <list>
 #include <vector>
-
 #include "CCitizen.h"
 
 const unsigned short HEIGHT = 5;

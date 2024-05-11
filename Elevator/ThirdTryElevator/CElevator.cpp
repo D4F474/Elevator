@@ -1,22 +1,17 @@
 ﻿#include "CElevator.h"
 CElevator::CElevator()
 {
-	requestsForUp = std::list<CCitizen*>();
-	requestsForDown = std::list<CCitizen*>();
+	requestsForUp = std::list<unsigned short>();
+	requestsForDown = std::list<unsigned short>();
 }
 
 CElevator::CElevator(unsigned short levels)
 	:CBuilding(levels)
 {
+	currLevel = (levels * 5) - 3;
 	matrix[currLevel][2] = '(';
-	requestsForUp = std::list<CCitizen*>();
-	requestsForDown = std::list<CCitizen*>();
-}
-
-unsigned short CElevator::callElevatorFromOutside() 
-{
-	
-	return 0;
+	requestsForUp = std::list<unsigned short>();
+	requestsForDown = std::list<unsigned short>();
 }
 
 void CElevator::moveUpElevator()
@@ -55,14 +50,14 @@ bool CElevator::checkIfIsUp()
 	return isUp;
 }
 
-void CElevator::addForUp(CCitizen& citizen)
+void CElevator::addForUp(unsigned short citizenLevel)
 {
-	requestsForUp.push_front(&citizen);
+	requestsForUp.push_front(citizenLevel);
 }
 
-void CElevator::addForDown(CCitizen& citizen)
+void CElevator::addForDown(unsigned short citizenLevel)
 {
-	requestsForDown.push_front(&citizen);
+	requestsForDown.push_front(citizenLevel);
 }
 
 void CElevator::dropForUp()
@@ -75,11 +70,11 @@ void CElevator::dropForDown()
 	requestsForDown.pop_front();
 }
 
-std::list<CCitizen*> CElevator::getRequestsForUp()
+std::list<unsigned short> CElevator::getRequestsForUp()
 {
 	return requestsForUp;
 }
-std::list<CCitizen*> CElevator::getRequestsForDown()
+std::list<unsigned short> CElevator::getRequestsForDown()
 {
 	return requestsForDown;
 }
@@ -88,9 +83,9 @@ unsigned short CElevator::getLevelNum() const
 	return levelNum;
 }
 
-bool CElevator::checkIfCitizenHaveToLeaveElevator(CCitizen*& c, CElevator& e) 
+bool CElevator::checkIfCitizenHaveToLeaveElevator(unsigned short c, CElevator& e)
 {
-	if (c->getPersonDestination() == e.getLevelNum())
+	if (c == e.getLevelNum())
 	{
 		return true;
 	}
@@ -119,19 +114,25 @@ void CElevator::removeRequestForDown()
 }
 
 bool CElevator::dropFromMiddleForUp(CElevator& elevator) {
-	for (std::list<CCitizen*>::iterator it = elevator.requestsForUp.begin(); it != elevator.requestsForUp.end();) {
+	unsigned short counter = 0;
+	for (std::list<unsigned short>::iterator it = elevator.requestsForUp.begin(); it != elevator.requestsForUp.end();) {
 		if (checkIfCitizenHaveToLeaveElevator(*it, elevator)) {
 			it = elevator.requestsForUp.erase(it);
+			counter++;
 		}
 		else {
 			++it;
 		}
 	}
-	return false;
+	if (counter > 0)
+	{
+		return true;
+	}
+		return false;
 }
 
 bool CElevator::dropFromMiddleForDown(CElevator& elevator) {
-	for (std::list<CCitizen*>::iterator it = elevator.requestsForDown.begin(); it != elevator.requestsForDown.end();) {
+	for (std::list<unsigned short>::iterator it = elevator.requestsForDown.begin(); it != elevator.requestsForDown.end();) {
 		if (checkIfCitizenHaveToLeaveElevator(*it, elevator)) {
 			it = elevator.requestsForDown.erase(it);
 		}

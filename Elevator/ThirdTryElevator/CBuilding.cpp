@@ -23,10 +23,7 @@ void CBuilding::setLevels(unsigned short levels)
 {
 	Levels = levels;
 }
-unsigned short CBuilding::getLevels() const
-{
-	return Levels;
-}
+unsigned short CBuilding::getLevels() const {return Levels;}
 void CBuilding::getMatrix() const
 {
 	int level = getLevels();

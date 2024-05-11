@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="CBuilding.cpp" />
     <ClCompile Include="CCitizen.cpp" />
+    <ClCompile Include="CDisplay.cpp" />
     <ClCompile Include="CElevator.cpp" />
     <ClCompile Include="CEngine.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="CBuilding.h" />
     <ClInclude Include="CCitizen.h" />
+    <ClInclude Include="CDisplay.h" />
     <ClInclude Include="CElevator.h" />
     <ClInclude Include="CEngine.h" />
   </ItemGroup>

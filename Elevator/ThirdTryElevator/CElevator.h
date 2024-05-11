@@ -2,6 +2,7 @@
 #define C_ELEVATOR
 #include <list>
 #include <cmath>
+
 //headers
 #include "CBuilding.h"
 #include "CCitizen.h"
@@ -13,35 +14,34 @@ class CElevator : public CBuilding
 private:
 	bool isDoorOpen = false;
 	bool isUp = true;
-	unsigned short currLevel = 17;
+	unsigned short currLevel = 0;
 	short levelNum = 1;
-	std::list<CCitizen*> requestsForUp;
-	std::list<CCitizen*> requestsForDown;
+	std::list<unsigned short> requestsForUp;
+	std::list<unsigned short> requestsForDown;
 	// elevator possition
 public:
 	CElevator();
 	CElevator(unsigned short levels);
 	void moveUpElevator();
 	void moveDownElevator();
-	unsigned short callElevatorFromOutside();
 	void changeIfIsUpOrDown();
 	bool checkIfIsUp();
-	std::list<CCitizen*> getRequestsForUp();
+	std::list<unsigned short> getRequestsForUp();
 	void removeRequestForUp();
 	void removeRequestForDown();
-	std::list<CCitizen*> getRequestsForDown();
+	std::list<unsigned short> getRequestsForDown();
 	unsigned short getLevelNum() const;
 	void incementOrDecrementLevelNum(bool isTrue);
 	unsigned short getCurrLevel();
 
-	void addForUp(CCitizen& citizen);
-	void addForDown(CCitizen& citizen);
+	void addForUp(unsigned short citizenLevel);
+	void addForDown(unsigned short citizenLevel);
 	void dropForUp();
 	//TODO WRITE THIS FUNCTIONS TO DELETE DAMN MIDDLE ELEMENTS FROM LIST
 	bool dropFromMiddleForUp(CElevator& elevator);
 	void dropForDown();
 	bool dropFromMiddleForDown(CElevator& elevator);
-	bool checkIfCitizenHaveToLeaveElevator(CCitizen*& c, CElevator& e);
+	bool checkIfCitizenHaveToLeaveElevator(unsigned short c, CElevator& e);
 
 };
 #endif

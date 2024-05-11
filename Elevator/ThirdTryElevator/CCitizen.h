@@ -2,7 +2,6 @@
 #define C_CITIZEN
 #include <iostream>
 
-
 #define MIN_KG_FOR_CITIZEN 30
 #define MAX_KG_FOR_CITIZEN 120
 class CCitizen 
