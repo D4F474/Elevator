@@ -130,8 +130,10 @@
     <ClCompile Include="CBuilding.cpp" />
     <ClCompile Include="CCitizen.cpp" />
     <ClCompile Include="CDisplay.cpp" />
+    <ClCompile Include="CDoorBtn.cpp" />
     <ClCompile Include="CElevator.cpp" />
-    <ClCompile Include="CEngine.cpp" />
+    <ClCompile Include="CEmergencyBtn.cpp" />
+    <ClCompile Include="CStopBtn.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="UserInput.cpp" />
   </ItemGroup>
@@ -139,8 +141,10 @@
     <ClInclude Include="CBuilding.h" />
     <ClInclude Include="CCitizen.h" />
     <ClInclude Include="CDisplay.h" />
+    <ClInclude Include="CDoorBtn.h" />
     <ClInclude Include="CElevator.h" />
-    <ClInclude Include="CEngine.h" />
+    <ClInclude Include="CEmergencyBtn.h" />
+    <ClInclude Include="CStopBtn.h" />
     <ClInclude Include="CUserInput.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,7 @@
 #define C_ELEVATOR
 #include <list>
 #include <cmath>
+#include <thread>
 
 //headers
 #include "CBuilding.h"

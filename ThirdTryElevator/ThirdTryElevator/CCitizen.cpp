@@ -11,6 +11,8 @@ CCitizen::CCitizen(unsigned short level)
 CCitizen::CCitizen(unsigned short level, unsigned short currlevel)
 {
 	setLevelOfBuilding(level);
+	system("CLS");
+	std::cout << "From 1 to " << getLevel() << std::endl;
 	std::cout << "Which floor you want to be: ";				std::cin >> currlevel;
 	setPersonLevel(currlevel);
 }

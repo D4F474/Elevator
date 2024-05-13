@@ -27,13 +27,19 @@
     <ClCompile Include="CCitizen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CEngine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CDisplay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UserInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CStopBtn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CDoorBtn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CEmergencyBtn.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,13 +53,19 @@
     <ClInclude Include="CCitizen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CDisplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CUserInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CStopBtn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CDoorBtn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CEmergencyBtn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

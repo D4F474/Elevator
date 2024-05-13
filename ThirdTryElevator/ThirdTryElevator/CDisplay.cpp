@@ -11,16 +11,17 @@ void CDisplay::showStatus(CElevator*& Elevator)
 	//fix me
 	std::cout << "Door is closed: " << "YES" << std::endl;
 }
-
-void CDisplay::showLevel(CElevator*& elevator)
+void CDisplay::showTextOnDisplay(CElevator*& elevator)
 {
-
-}
-void CDisplay::showIfDoorIsOpen(CElevator*& elevator)
-{
-
-}
-void CDisplay::showAlarmButton(CElevator*& elevator)
-{
-
+	
+	std::cout << '+' << std::setfill('-') << std::setw(10) << '+';
+	std::cout << std::endl << '|' << "Moving..." << '|' << std::endl;
+	if (elevator->checkIfIsUp())
+	{
+		std::cout << std::setfill(' ') << '|' << std::setw(5) << "/\\" << std::setw(5) << '|' << std::endl;
+	}
+	else {
+		std::cout << std::setfill(' ') << '|' << std::setw(5) << "/\\" << std::setw(5) << '|' << std::endl;
+	}
+	std::cout << '+' << std::setfill('-') << std::setw(10) << '+';
 }

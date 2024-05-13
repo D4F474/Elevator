@@ -1,14 +1,13 @@
 #ifndef C_DISPLAY
 #define C_DISPLAY
 #include <iostream>
+#include <iomanip>
 #include "CElevator.h"
-class CDisplay
+class CDisplay 
 {
 public:
 	void showStatus(CElevator*& elevator);
-	void showLevel(CElevator*& elevator);
-	void showIfDoorIsOpen(CElevator*& elevator);
-	void showAlarmButton(CElevator*& elevator);
+	virtual void showTextOnDisplay(CElevator*& elevator);
 };
 
 #endif
