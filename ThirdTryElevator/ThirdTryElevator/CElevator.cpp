@@ -30,10 +30,7 @@ void CElevator::moveDownElevator()
 	getMatrix();
 }
 
-unsigned short CElevator::getCurrLevel()
-{
-	return currLevel;
-}
+unsigned short CElevator::getCurrLevel() {return currLevel;}
 
 void CElevator::changeIfIsUpOrDown() 
 {
@@ -45,30 +42,16 @@ void CElevator::changeIfIsUpOrDown()
 	isUp = true;
 }
 
-bool CElevator::checkIfIsUp()
-{
-	return isUp;
-}
+bool CElevator::checkIfIsUp(){return isUp;}
 
-void CElevator::addForUp(unsigned short citizenLevel)
-{
-	requestsForUp.push_front(citizenLevel);
-}
+void CElevator::addForUp(unsigned short citizenLevel) {requestsForUp.push_front(citizenLevel);}
 
 void CElevator::addForDown(unsigned short citizenLevel)
 {
 	requestsForDown.push_front(citizenLevel);
 }
 
-void CElevator::dropForUp()
-{
-	requestsForUp.pop_front();
-}
 
-void CElevator::dropForDown()
-{
-	requestsForDown.pop_front();
-}
 
 std::list<unsigned short> CElevator::getRequestsForUp()
 {
@@ -104,14 +87,8 @@ void CElevator::incementOrDecrementLevelNum(bool isTrue)
 	}
 }
 
-void CElevator::removeRequestForUp()
-{
-	requestsForUp.pop_front();
-}
-void CElevator::removeRequestForDown()
-{
-	requestsForDown.pop_front();
-}
+void CElevator::removeRequestForUp() {requestsForUp.pop_front();}
+void CElevator::removeRequestForDown(){requestsForDown.pop_front();}
 
 bool CElevator::dropFromMiddleForUp(CElevator& elevator) {
 	unsigned short counter = 0;
@@ -143,10 +120,7 @@ bool CElevator::dropFromMiddleForDown(CElevator& elevator) {
 	return false;
 }
 
-bool CElevator::checkDoorIsOpen()
-{
-	return isDoorOpen;
-}
+bool CElevator::checkDoorIsOpen(){return isDoorOpen;}
 void CElevator::openOrCloseDoor()
 {
 	if (isDoorOpen)

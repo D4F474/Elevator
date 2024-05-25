@@ -8,6 +8,8 @@ class CDisplay
 public:
 	void showStatus(CElevator*& elevator);
 	virtual void showTextOnDisplay(CElevator*& elevator);
+	void personJoiningEl();
+	void personLeavingEl();
 };
 
 #endif

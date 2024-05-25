@@ -1,3 +1,12 @@
-﻿  Source.cpp
-C:\Users\power\Desktop\ThirdTryElevator\ThirdTryElevator\Source.cpp(28,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  ThirdTryElevator.vcxproj -> C:\Users\power\Desktop\ThirdTryElevator\x64\Debug\ThirdTryElevator.exe
+﻿  CBuilding.cpp
+  CCitizen.cpp
+  CDisplay.cpp
+  CDoorBtn.cpp
+  CElevator.cpp
+  CEmergencyBtn.cpp
+  CStopBtn.cpp
+  Source.cpp
+C:\Users\power\Desktop\Курсов проект-Симулация асансьор\ThirdTryElevator\ThirdTryElevator\Source.cpp(32,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  UserInput.cpp
+  Generating Code...
+  ThirdTryElevator.vcxproj -> C:\Users\power\Desktop\Курсов проект-Симулация асансьор\ThirdTryElevator\x64\Debug\ThirdTryElevator.exe

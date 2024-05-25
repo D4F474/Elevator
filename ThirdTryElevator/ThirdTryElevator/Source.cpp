@@ -2,58 +2,60 @@
 #include <thread>
 #include <chrono>
 #include <list>
+#include <iomanip>
 
-//Classes
+
 #include "CBuilding.h"
 #include "CElevator.h"
 #include "CDisplay.h"
 #include "CUserInput.h"
 
-#define MAIN_MENU_ELEMENTS 3
+#define MAIN_MENU_ELEMENTS 2
+
 #define LEVELS_OF_BUILDING 4
 #define PEOPLE_TO_USE_ELEVATOR 1
-void startProgram();
-void enterSignalsForElevatorInBuilding();
-unsigned short mainMenu();
-void moveElevator();
-void elevatorStart();
 
+//prototypes
+void startProgram(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput);
+void enterSignalsForElevatorInBuilding(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput);
+unsigned short mainMenu();
+void moveElevator(CElevator*& Elevator);
+void elevatorStart(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput);
+
+
+int main()
+{
 CElevator* Elevator = nullptr;
 CCitizen* citizen = nullptr;
 CDisplay* display = nullptr;
 CUserInput* userInput = nullptr;
-
-int main()
-{
 	srand(time(NULL));
-	startProgram();
+	startProgram(Elevator, citizen, display, userInput);
 	std::cout << std::endl << "Congrats we work good!";
 	return 0;
 }
 
-void startProgram()
+void startProgram(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput)
 {
-	switch (mainMenu())
+	unsigned short menuItem;
+	do {
+		system("CLS");
+		menuItem = mainMenu();
+	switch (menuItem)
 	{
 	case 1:
 		Elevator = new CElevator(LEVELS_OF_BUILDING);
 		display = new CDisplay();
 		userInput = new CUserInput(LEVELS_OF_BUILDING);
-		enterSignalsForElevatorInBuilding();
-		break;
-	case 2:
-		//Settings
-
-		break;
-	case 3:
-
+		enterSignalsForElevatorInBuilding(Elevator, citizen, display, userInput);
 		break;
 	default:
 
 		break;
 	}
+	} while (menuItem != MAIN_MENU_ELEMENTS);
 }
-void enterSignalsForElevatorInBuilding()
+void enterSignalsForElevatorInBuilding(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput)
 {
 	for (int i = 0; i < PEOPLE_TO_USE_ELEVATOR; i++)
 	{
@@ -65,26 +67,23 @@ void enterSignalsForElevatorInBuilding()
 	Elevator->sortWaiters();
 	if (Elevator->waiters().size() > 0)
 	{
-		elevatorStart();
+		elevatorStart(Elevator, citizen, display, userInput);
 	}
 }
 unsigned short mainMenu()
 {
 	unsigned short choise;
-	std::cout << "*******" << std::endl;
-	std::cout << "*** Menu ***" << std::endl;
-	std::cout << "1. Start simulator without you" << std::endl;
-	std::cout << "2. Start simulator with your control" << std::endl;
-	std::cout << "3. Exit" << std::endl;
+	std::cout << "******* Menu *******" << std::endl;
+	std::cout << '*' << "1. Start simulator" << '*' << std::endl;
+	std::cout << '*' << "2. Exit"<< std::setw(12) << '*' << std::endl;
 	do {
-		std::cout << "Choise option" << std::endl;
-		std::cin >> choise;
+		std::cout << "Choise option: ";			std::cin >> choise;
 	} while (choise < 1 || choise > MAIN_MENU_ELEMENTS);
 	return choise;
 
 }
 
-void moveElevator()
+void moveElevator(CElevator*& Elevator)
 {
 	if (Elevator->checkIfIsUp())
 	{
@@ -92,21 +91,22 @@ void moveElevator()
 		{
 
 			Elevator->moveUpElevator();
-			std::this_thread::sleep_for(std::chrono::seconds(1));
+			std::this_thread::sleep_for(std::chrono::seconds(2));
 		}
 	}
 	else
 	{
+		
 		for (int i = 0; i < 5; i++)
 		{
 			Elevator->moveDownElevator();
-
-			std::this_thread::sleep_for(std::chrono::seconds(1));
+			std::this_thread::sleep_for(std::chrono::seconds(2));
 		}
+		
 	}
 }
 
-void elevatorStart()
+void elevatorStart(CElevator*& Elevator, CCitizen*& citizen, CDisplay*& display, CUserInput*& userInput)
 {
 	while (true)
 	{
@@ -118,16 +118,23 @@ void elevatorStart()
 			if (citizen->getPersonDestination() > Elevator->getLevelNum() && citizen != nullptr && citizen->getPersonLevel() == Elevator->getLevelNum())
 			{
 				Elevator->addForUp(citizen->getPersonDestination());
+				display->personJoiningEl();
+				std::this_thread::sleep_for(std::chrono::seconds(3));
 				Elevator->removeBuildWaiters();
 				continue;
 			}
 			else if (citizen != nullptr && citizen->getPersonLevel() == Elevator->getLevelNum())
 			{
 				Elevator->addForDown(citizen->getPersonDestination());
+				display->personJoiningEl();
+				std::this_thread::sleep_for(std::chrono::seconds(3));
 				Elevator->removeBuildWaiters();
 				continue;
 			}
 		}
+	std::thread userInputThread([&]() {
+		userInput->userRequestSpecialButtons(Elevator);
+		});
 		//checking if elevator is up or down
 		if (Elevator->checkIfIsUp())
 		{
@@ -143,22 +150,25 @@ void elevatorStart()
 			{
 				if (!Elevator->dropFromMiddleForUp(*Elevator))
 				{
-					moveElevator();
+					display->personLeavingEl();
+					std::this_thread::sleep_for(std::chrono::seconds(5));
+					moveElevator(Elevator);
 					Elevator->incementOrDecrementLevelNum(Elevator->checkIfIsUp());
 					display->showStatus(Elevator);
 				}
 				else {
-					std::this_thread::sleep_for(std::chrono::seconds(3));
 				}
 			}
 			else if (Elevator->getRequestsForUp().size() == 1 && Elevator->getRequestsForUp().front() == Elevator->getLevelNum())
 			{
-				Elevator->dropForUp();
-				std::this_thread::sleep_for(std::chrono::seconds(3));
+				display->personLeavingEl();
+				std::this_thread::sleep_for(std::chrono::seconds(5));
+				Elevator->removeRequestForUp();
 			}
 			else
 			{
-				moveElevator();
+
+				moveElevator(Elevator);
 				Elevator->incementOrDecrementLevelNum(Elevator->checkIfIsUp());
 				display->showStatus(Elevator);
 			}
@@ -177,22 +187,24 @@ void elevatorStart()
 			{
 				if (!Elevator->dropFromMiddleForDown(*Elevator))
 				{
-					moveElevator();
+					display->personLeavingEl();
+					std::this_thread::sleep_for(std::chrono::seconds(5));
+					moveElevator(Elevator);
 					Elevator->incementOrDecrementLevelNum(Elevator->checkIfIsUp());
 					display->showStatus(Elevator);
 				}
 				else {
-					std::this_thread::sleep_for(std::chrono::seconds(3));
 				}
 			}
 			else if (Elevator->getRequestsForDown().size() == 1 && Elevator->getRequestsForDown().front() == Elevator->getLevelNum())
 			{
-				Elevator->dropForDown();
-				std::this_thread::sleep_for(std::chrono::seconds(3));
+				display->personLeavingEl();
+				std::this_thread::sleep_for(std::chrono::seconds(5));
+				Elevator->removeRequestForDown();
 			}
 			else
 			{
-				moveElevator();
+				moveElevator(Elevator);
 				Elevator->incementOrDecrementLevelNum(Elevator->checkIfIsUp());
 				display->showStatus(Elevator);
 			}
@@ -200,7 +212,10 @@ void elevatorStart()
 		if (Elevator->waiters().size() == 0 && Elevator->getRequestsForUp().size() == 0 && Elevator->getRequestsForDown().size() == 0
 			&& Elevator->getCurrLevel() == (LEVELS_OF_BUILDING * 5) - 3)
 		{
+			userInputThread.detach();
+			std::this_thread::sleep_for(std::chrono::seconds(3));
 			break;
 		}
+			userInputThread.detach();
 	}
 }

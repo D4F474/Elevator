@@ -5,7 +5,6 @@ CCitizen::CCitizen(unsigned short level)
 	setLevelOfBuilding(level);
 	setPersonLevel(randomNumberForCurrentLevel());
 	setPersonDestination(randomNumberForDestination());
-	setPersonKg(randomKillogramsForPerson());
 }
 
 CCitizen::CCitizen(unsigned short level, unsigned short currlevel)
@@ -17,39 +16,15 @@ CCitizen::CCitizen(unsigned short level, unsigned short currlevel)
 	setPersonLevel(currlevel);
 }
 
-void CCitizen::setPersonKg(unsigned short kg)
-{
-		personKg = kg;	
-}
+void CCitizen::setPersonLevel(unsigned short level) { personLevel = level; }
 
-void CCitizen::setPersonLevel(unsigned short level)
-{	
-		personLevel = level;
-}
+void CCitizen::setPersonDestination(unsigned short level) { personDestination = level; }
 
-void CCitizen::setPersonDestination(unsigned short level)
-{
-	personDestination = level;
-}
+void CCitizen::setLevelOfBuilding(unsigned short level) { buildingLevels = level; }
 
-void CCitizen::setLevelOfBuilding(unsigned short level)
-{
-	buildingLevels = level;
-}
-unsigned short CCitizen::getPersonKg()
-{
-	return personKg;
-}
+unsigned short CCitizen::getPersonLevel() const { return personLevel; }
 
-unsigned short CCitizen::getPersonLevel()
-{
-	return personLevel;
-}
-
-unsigned short CCitizen::getPersonDestination()
-{
-	return personDestination;
-}
+unsigned short CCitizen::getPersonDestination() const { return personDestination;}
 
 unsigned short CCitizen::randomNumberForDestination() 
 {
@@ -70,24 +45,11 @@ unsigned short CCitizen::randomNumberForCurrentLevel()
 	return personLevel;
 }
 
-unsigned short CCitizen::randomKillogramsForPerson() 
-{
-	unsigned short random = rand() % 120 + 30;
-	return random;
-}
-
-unsigned short CCitizen::getLevel() {
-	return buildingLevels;
-}
+unsigned short CCitizen::getLevel() const { return buildingLevels; }
 std::ostream& operator << (std::ostream& toStream, const CCitizen& citizen) 
 {
-	toStream << "KG: "<<citizen.personKg << std::endl <<
+	toStream <<
 		"Destination: " << citizen.personDestination << std::endl
 		<<"Current level: " << citizen.personLevel << std::endl;
 	return toStream;
 }
-
-
-//TODO fix it
-
-

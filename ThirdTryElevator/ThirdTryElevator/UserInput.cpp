@@ -34,26 +34,24 @@ unsigned short CUserInput::userRequestDestination()
 void CUserInput::userRequestSpecialButtons(CElevator*& elevator) 
 {
 	char userInput = '\0';
-	bool rightInput = false;
 	std::cout << "( s )" << std::endl;
 	std::cout << "( [ )" << std::endl;
 	std::cout << "( ! )" << std::endl;					std::cin >> userInput;
-	while (!rightInput)
-	{
 		switch (userInput)
 		{
 			case 's':
 				stopBtn->showTextOnDisplay(elevator);
-				rightInput = true;
+				std::this_thread::sleep_for(std::chrono::seconds(5));
 				break;
 			case '[':
 				doorBtn->showTextOnDisplay(elevator);
-				rightInput = true;
 				break;
 			case '!':
 				emergencyBtn->showTextOnDisplay(elevator);
-				rightInput = true;
+				break;
+			default:
 				break;
 		}
-	}
+		std::cin.ignore();
+	
 }

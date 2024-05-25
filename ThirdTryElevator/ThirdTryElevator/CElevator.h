@@ -8,8 +8,6 @@
 #include "CBuilding.h"
 #include "CCitizen.h"
 
-#define MAX_KG_ELEVATOR 180
-
 class CElevator : public CBuilding
 {
 private:
@@ -23,27 +21,23 @@ private:
 public:
 	CElevator();
 	CElevator(unsigned short levels);
-	void moveUpElevator();
-	void moveDownElevator();
-	void changeIfIsUpOrDown();
-	bool checkIfIsUp();
-	bool checkDoorIsOpen();
-	void openOrCloseDoor();
 	std::list<unsigned short> getRequestsForUp();
-	void removeRequestForUp();
-	void removeRequestForDown();
 	std::list<unsigned short> getRequestsForDown();
 	unsigned short getLevelNum() const;
-	void incementOrDecrementLevelNum(bool isTrue);
 	unsigned short getCurrLevel();
+	void moveUpElevator();
+	void moveDownElevator();
+	void openOrCloseDoor();
+	void changeIfIsUpOrDown();
 	void addForUp(unsigned short citizenLevel);
+	void removeRequestForUp();
+	void removeRequestForDown();
 	void addForDown(unsigned short citizenLevel);
-	void dropForUp();
-	//TODO WRITE THIS FUNCTIONS TO DELETE DAMN MIDDLE ELEMENTS FROM LIST
 	bool dropFromMiddleForUp(CElevator& elevator);
-	void dropForDown();
 	bool dropFromMiddleForDown(CElevator& elevator);
+	bool checkIfIsUp();
+	bool checkDoorIsOpen();
 	bool checkIfCitizenHaveToLeaveElevator(unsigned short c, CElevator& e);
-
+	void incementOrDecrementLevelNum(bool isTrue);
 };
 #endif

@@ -10,5 +10,4 @@ void CStopBtn::showTextOnDisplay(CElevator*& elevator)
 
 void CStopBtn::stopElev()
 {
-
 }

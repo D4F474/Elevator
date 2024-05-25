@@ -19,10 +19,7 @@ CBuilding::CBuilding(unsigned short levels)
 	}
 }
 
-void CBuilding::setLevels(unsigned short levels)
-{
-	Levels = levels;
-}
+void CBuilding::setLevels(unsigned short levels) {Levels = levels;}
 unsigned short CBuilding::getLevels() const {return Levels;}
 void CBuilding::getMatrix() const
 {
@@ -40,24 +37,12 @@ void CBuilding::getMatrix() const
 	}
 }
 
-void CBuilding::addBuildWaiters(CCitizen& citizen)
-{
-	BuildWaiters.push_back(&citizen);
-}
-void CBuilding::removeBuildWaiters()
-{
-	BuildWaiters.pop_front();
-}
+void CBuilding::addBuildWaiters(CCitizen& citizen) {BuildWaiters.push_back(&citizen);}
+void CBuilding::removeBuildWaiters() {BuildWaiters.pop_front();}
 
-CCitizen* CBuilding::getWaiter() 
-{
-	return BuildWaiters.front();
-}
+CCitizen* CBuilding::getWaiter() {return BuildWaiters.front();}
 
-std::list<CCitizen*> CBuilding::waiters()
-{
-	return BuildWaiters;
-}
+std::list<CCitizen*> CBuilding::waiters() {return BuildWaiters;}
 
 void CBuilding::sortWaiters()
 {

@@ -6,6 +6,7 @@
 #include "CEmergencyBtn.h"
 class CUserInput : public CCitizen
 {
+private:
 	CDoorBtn* doorBtn;
 	CStopBtn* stopBtn;
 	CEmergencyBtn* emergencyBtn;
