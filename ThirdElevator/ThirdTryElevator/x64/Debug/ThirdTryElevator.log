@@ -1,5 +1,0 @@
-﻿  CEngine.cpp
-C:\Users\power\Desktop\ПС-Код\LAB02\ThirdElevator\ThirdTryElevator\CEngine.cpp(4,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Source.cpp
-  Generating Code...
-  ThirdTryElevator.vcxproj -> C:\Users\power\Desktop\ПС-Код\LAB02\ThirdElevator\x64\Debug\ThirdTryElevator.exe
