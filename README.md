@@ -1,48 +1,100 @@
-# 🛗 Flexible Elevator Simulation (C++)
+# 🛗 Elevator Simulation (C++)
 
-A simple and configurable multithreaded elevator simulation written in pure C++.  
-The system simulates how an elevator reacts to incoming signals from various floors and processes them accordingly.
+A console elevator simulation written in C++ for Windows (Visual Studio project).
+An elevator moves through a multi-floor building, picks up a randomly generated passenger and the user,
+and drops them off at their destination floors. The building is drawn in the console as a simple ASCII shaft.
 
 ---
 
 ## ✨ Main Functionalities
 
-### 📶 Dynamic Floor Signals
--  The elevator accepts input from multiple floors.
--  Floor count is flexible – can be changed by modifying a single constant in the source code.
--  Each signal is processed by a dedicated thread.
+### 🏢 Building and elevator
+- The building is drawn as a character matrix; the elevator `(` moves up and down the shaft one row at a time.
+- Floor count is set by the `LEVELS_OF_BUILDING` constant in `Source.cpp`
+  (see [Known Limitations](#️-known-limitations) – some parts of the logic still assume 4 floors).
 
-### 🔄 Threaded Execution
--  Simulates concurrent requests from different floors.
--  Handles requests sequentially, depending on elevator position and direction.
--  Basic protection is included against thread collisions (race conditions are rare, but possible).
+### 🔼🔽 Direction-aware request queues
+- The elevator keeps two separate queues: `requestsForUp` and `requestsForDown`.
+- When a passenger boards, their destination goes into the up or down queue depending on whether it is above or below the current floor.
+- The elevator reverses direction when it reaches the end of its route.
+- Passengers waiting in the building are sorted by their floor and picked up when the elevator reaches them.
 
-### 🧮 Data Handling
--  Accepts user input from the console
--  Works with:
-  - Integers (`int`) – for floor numbers
-  - Characters (`char`) – for user choices or signals
+### 🚪 Mid-route drop-off
+- While travelling **up**, passengers whose destination matches the current floor leave the elevator before it continues.
+- Drop-off while travelling **down** is only partly implemented (see Known Limitations).
+
+### 🧍 Passengers
+- `CCitizen` generates a passenger with a random current floor and a random destination.
+- The user is also a passenger (`CUserInput`): they choose their starting floor and destination floor from the console.
+- The number of random passengers is set by `PEOPLE_TO_USE_ELEVATOR` (default: 1).
+
+### 🔘 Buttons and input thread
+- Three buttons are available while the elevator runs:
+
+  | Key | Button |
+  |-----|--------|
+  | `s` | Stop |
+  | `[` | Door |
+  | `!` | Emergency |
+
+- Button input is read in a separate `std::thread`, so the user can press a button while the elevator is moving.
+- **Currently the buttons only display a message** (stop, door state, emergency call). They do not yet stop the elevator or change the door state.
 
 ---
 
-## ⚠️ Known Limitations & Error Handling
+## 🧱 Project Structure
 
--  Possible error: submitting a non-integer when a floor number is expected (e.g., char instead of int)
--  Rare thread overlapping issues may occur (thread safety is handled to a basic level)
--  User input validation is minimal – designed for demonstration/testing purposes
+| Class | Role |
+|-------|------|
+| `CBuilding` | Floors, ASCII matrix, list of waiting passengers |
+| `CElevator` | Inherits `CBuilding`; position, direction, up/down queues, drop-off logic |
+| `CCitizen` | Passenger with random floor and destination |
+| `CUserInput` | Inherits `CCitizen`; the user as a passenger, reads floors and button presses |
+| `CDisplay` | Prints elevator status and boarding/leaving messages |
+| `CStopBtn`, `CDoorBtn`, `CEmergencyBtn` | Inherit `CDisplay`; button messages |
+
+The program entry point and main simulation loop are in `Source.cpp`.
+`CEngine.*` is an unused earlier attempt and is not part of the build.
+
+---
+
+## ▶️ How to Run
+
+1. Open `ThirdTryElevator/ThirdTryElevator.sln` in Visual Studio.
+2. Build and run (x64, Debug).
+3. Choose `1` in the menu to start the simulation.
+4. Enter your starting floor, then your destination floor (a single digit).
+5. While the elevator moves, press `s`, `[` or `!` and Enter to use a button.
+
+The program uses `system("CLS")`, so it runs on Windows only.
+
+---
+
+## ⚠️ Known Limitations
+
+- **Floor count is not fully flexible.** Changing `LEVELS_OF_BUILDING` is not enough: some values are hard-coded
+  (row height `5`, offset `-3`, a fixed floor `2`, and floor `4` is excluded from random destinations).
+- **Drop-off while moving down is incomplete.** `dropFromMiddleForDown` never reports a drop-off,
+  and the "Person leave the elevator!" message logic is inverted in the up/down branches.
+- **Buttons are placeholders.** `stopElev()`, `openOrCloseDoor()` and `emergencyCall()` are empty;
+  the door status line in the display is inverted.
+- **Input thread is created on every loop iteration** and detached, with no synchronization (no mutex).
+  Several threads can read from `cin` at once, so input may behave unexpectedly.
+- **Input handling is minimal.** Floors are read as a single character, so at most 9 floors are supported,
+  and entering a non-number where a number is expected can break the menu.
+- Only one random passenger is generated by default.
 
 ---
 
 ## 🛠️ Technologies Used
 
--  Language: **C++**
--  Multithreading: **`std::thread`**, **`mutex`**
--  Input/Output: **Standard console I/O**
+- Language: **C++**
+- Multithreading: **`std::thread`**
+- Input/Output: **Standard console I/O**
+- IDE: **Visual Studio** (Windows)
 
 ---
 
 ## 📽️ Demo
-
-_A short demo GIF showcasing how the elevator simulation runs will appear here._
 
 ![Elevator](https://github.com/user-attachments/assets/3271a583-0f13-4b72-aaf8-93e70c12b982)
